@@ -8,6 +8,8 @@ TagManager:
   - Team1
   - Team2
   - RangedUnit
+  - FactoryBuilding
+  - ResourceBuildings
   layers:
   - Default
   - TransparentFX
