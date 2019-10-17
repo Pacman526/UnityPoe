@@ -11,6 +11,7 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected float speed;
     [SerializeField] protected int team;
     [SerializeField] protected Material[] mat;
+    float timer = 0;
 
     public int Hp { get => hp; set => hp = value; }
     public int MaxHP { get => maxHP; }
@@ -28,9 +29,25 @@ public abstract class Unit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!IsInRange(GetClosestUnit()))
+        GameObject Enemy = GetClosestUnit();
+        if (!IsInRange(Enemy))
         {
             transform.position = Vector3.MoveTowards(transform.position, GetClosestUnit().transform.position, speed * Time.deltaTime);
+        }else if(Enemy.GetComponent<Unit>().hp < 0)
+        {
+            Destroy(Enemy);
+        }
+        else
+        {
+            
+            timer += Time.deltaTime;
+
+            if (timer >0.2f)
+            {
+                Enemy.GetComponent<Unit>().hp -= attack;
+                timer = 0;
+            }
+            
         }
     }
 
