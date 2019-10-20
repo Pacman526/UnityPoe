@@ -10,6 +10,7 @@ public abstract class Building : MonoBehaviour
     [SerializeField] protected int team;
     [SerializeField] protected Material[] mat;
 
+    public string typeOfUnit;
     public int Hp { get => HP; set => HP = value; }
     public int MaxHP { get => maxHP; }
     public int Team { get => team; }

@@ -9,10 +9,12 @@ public class ResourceBuiding : Building
     public int resourcesGenerated = 0;
     public int generatedPerRound = 2;
     public int remainingResources = 100;
+    
 
     // Start is called before the first frame update
     void Start()
     {
+        typeOfUnit = "ResourceBuilding";
         Hp = 50;
         maxHP = Hp;
         team = Random.Range(1, 3);
@@ -26,6 +28,7 @@ public class ResourceBuiding : Building
                 gameObject.tag = "Team2";
                 break;
         }
+        
     }
 
     // Update is called once per frame

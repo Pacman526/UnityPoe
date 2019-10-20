@@ -7,6 +7,7 @@ public class MeleeUnit : Unit
     // Start is called before the first frame update
     void Start()
     {
+        typeOfUnit = "MeleeUnit";
         Hp = 10;
         maxHP = hp;
         attack = 2;

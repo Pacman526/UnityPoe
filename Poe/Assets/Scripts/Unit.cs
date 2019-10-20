@@ -12,6 +12,7 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected int team;
     [SerializeField] protected Material[] mat;
     float timer = 0;
+    public string typeOfUnit;
 
     public int Hp { get => hp; set => hp = value; }
     public int MaxHP { get => maxHP; }
@@ -30,18 +31,40 @@ public abstract class Unit : MonoBehaviour
     void Update()
     {
         GameObject Enemy = GetClosestUnit();
+        
+        if (Enemy.GetComponent<Building>())
+        {
+            if (!IsInRange(Enemy))
+            {
+                transform.position = Vector3.MoveTowards(transform.position, GetClosestUnit().transform.position, speed * Time.deltaTime);
+            }
+            else if (Enemy.GetComponent<Building>().Hp < 0)
+            {
+                Destroy(Enemy);
+            }
+            else
+            {
+                timer += Time.deltaTime;
+                if (timer > 0.2f)
+                {
+                    Enemy.GetComponent<Building>().Hp -= attack;
+                    timer = 0;
+                }
+
+            }
+        }else
+
         if (!IsInRange(Enemy))
         {
             transform.position = Vector3.MoveTowards(transform.position, GetClosestUnit().transform.position, speed * Time.deltaTime);
-        }else if(Enemy.GetComponent<Unit>().hp < 0)
+        }
+        else if(Enemy.GetComponent<Unit>().hp < 0)
         {
             Destroy(Enemy);
         }
         else
         {
-            
             timer += Time.deltaTime;
-
             if (timer >0.2f)
             {
                 Enemy.GetComponent<Unit>().hp -= attack;
@@ -63,6 +86,7 @@ public abstract class Unit : MonoBehaviour
     {
         GameObject unit = null;
         GameObject[] units = null;
+      
 
         switch (team)
         {
@@ -71,6 +95,7 @@ public abstract class Unit : MonoBehaviour
                 break;
             case 2:
                 units = GameObject.FindGameObjectsWithTag("Team1");
+
                 break;
         }
 

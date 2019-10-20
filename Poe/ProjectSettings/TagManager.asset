@@ -9,7 +9,16 @@ TagManager:
   - Team2
   - RangedUnit
   - FactoryBuilding
+  - ResourceBuilding
   - ResourceBuildings
+  - RBTeam1
+  - RBTeam2
+  - FBTeam1
+  - FBTeam2
+  - RTeam1
+  - RTeam2
+  - MTeam1
+  - MTeam2
   layers:
   - Default
   - TransparentFX
