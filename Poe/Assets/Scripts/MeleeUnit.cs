@@ -9,7 +9,7 @@ public class MeleeUnit : Unit
     void Start()
     {
         typeOfUnit = "MeleeUnit";
-        Hp = 10;
+        Hp = 15;
         maxHP = hp;
         attack = 2;
         range = 1;

@@ -19,6 +19,7 @@ TagManager:
   - RTeam2
   - MTeam1
   - MTeam2
+  - Team3
   layers:
   - Default
   - TransparentFX

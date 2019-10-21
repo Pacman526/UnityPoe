@@ -12,8 +12,10 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected float speed;
     [SerializeField] protected int team;
     [SerializeField] protected Material[] mat;
+    [SerializeField] protected string typeOfUnit;
+    [SerializeField] GameObject Enemy;
     float timer = 0;
-    public string typeOfUnit;
+    
 
     protected Image healthBar;
 
@@ -23,6 +25,7 @@ public abstract class Unit : MonoBehaviour
     public float Speed { get => speed; }
     public int Range { get => range; }
     public int Team { get => team; }
+    public string TypeOfUnit { get => typeOfUnit; }
 
     // Start is called before the first frame update
     void Start()
@@ -33,13 +36,70 @@ public abstract class Unit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject Enemy = GetClosestUnit();
+        GameObject[] units = null;
+
+        Enemy = GetClosestUnit();
         healthBar.fillAmount = (float)hp / maxHP;
         if (hp <= 0)
         {
             Destroy(gameObject);
         }
-        
+
+        if (tag == "Team3")
+        {
+            if (!IsInRange(Enemy))
+            {
+                transform.position = Vector3.MoveTowards(transform.position, GetClosestUnit().transform.position, speed * Time.deltaTime);
+            }
+            else if (Enemy.GetComponent<Unit>().hp < 0)
+            {
+                Destroy(Enemy);
+            }
+            else
+            {
+                timer += Time.deltaTime;
+                if (timer > 0.4f)
+                {
+                    units = GameObject.FindGameObjectsWithTag("Team1");
+                    foreach (GameObject temp in units)
+                    {
+                        if (temp.GetComponent<Building>())
+                        {
+
+                        }
+                        else
+                        {
+                            if(IsInRange(temp))
+                            {
+                                temp.GetComponent<Unit>().hp -= attack;
+                            }
+                        }
+                    }
+
+                    units = GameObject.FindGameObjectsWithTag("Team2");
+                    foreach (GameObject temp in units)
+                    {
+                        if (temp.GetComponent<Building>())
+                        {
+
+                        }
+                        else
+                        {
+                            if (IsInRange(temp))
+                            {
+                                temp.GetComponent<Unit>().hp -= attack;
+                                healthBar.fillAmount = (float)hp / maxHP;
+                            }
+                        }
+                    }
+
+                    timer = 0;
+
+                }
+            }
+        }
+
+        else
         if (Enemy.GetComponent<Building>())
         {
             if (!IsInRange(Enemy))
@@ -53,7 +113,7 @@ public abstract class Unit : MonoBehaviour
             else
             {
                 timer += Time.deltaTime;
-                if (timer > 0.2f)
+                if (timer > 0.5f)
                 {
                     Enemy.GetComponent<Building>().Hp -= attack;
                     timer = 0;
@@ -73,7 +133,7 @@ public abstract class Unit : MonoBehaviour
         else
         {
             timer += Time.deltaTime;
-            if (timer >0.2f)
+            if (timer >0.5f)
             {
                 Enemy.GetComponent<Unit>().hp -= attack;
                 timer = 0;
@@ -94,30 +154,107 @@ public abstract class Unit : MonoBehaviour
     {
         GameObject unit = null;
         GameObject[] units = null;
-      
+        float distance = 9999;
+
 
         switch (team)
         {
             case 1:
                 units = GameObject.FindGameObjectsWithTag("Team2");
+
+                foreach (GameObject temp in units)
+                {
+                    float tempDist = Vector3.Distance(transform.position, temp.transform.position);
+                    if (tempDist <= distance)
+                    {
+                        distance = tempDist;
+                        unit = temp;
+                    }
+                }
+
+                units = GameObject.FindGameObjectsWithTag("Team3");
+
+                foreach (GameObject temp in units)
+                {
+                    float tempDist = Vector3.Distance(transform.position, temp.transform.position);
+                    if (tempDist <= distance)
+                    {
+                        distance = tempDist;
+                        unit = temp;
+                    }
+                }
+
                 break;
             case 2:
                 units = GameObject.FindGameObjectsWithTag("Team1");
 
+                foreach (GameObject temp in units)
+                {
+                    float tempDist = Vector3.Distance(transform.position, temp.transform.position);
+                    if (tempDist <= distance)
+                    {
+                        distance = tempDist;
+                        unit = temp;
+                    }
+                }
+
+                units = GameObject.FindGameObjectsWithTag("Team3");
+
+                foreach (GameObject temp in units)
+                {
+                    float tempDist = Vector3.Distance(transform.position, temp.transform.position);
+                    if (tempDist <= distance)
+                    {
+                        distance = tempDist;
+                        unit = temp;
+                    }
+                }
+
+
+                break;
+            case 3:
+                units = GameObject.FindGameObjectsWithTag("Team1");
+
+                foreach (GameObject temp in units)
+                {
+                    if (temp.GetComponent<Building>())
+                    {
+
+                    }
+                    else
+                    {
+                        float tempDist = Vector3.Distance(transform.position, temp.transform.position);
+                        if (tempDist <= distance)
+                        {
+                            distance = tempDist;
+                            unit = temp;
+                        }
+                    }
+
+                }
+
+                units = GameObject.FindGameObjectsWithTag("Team2");
+
+                foreach (GameObject temp in units)
+                {
+                    if (temp.GetComponent<Building>())
+                    {
+
+                    }
+                    else
+                    {
+                        float tempDist = Vector3.Distance(transform.position, temp.transform.position);
+                        if (tempDist <= distance)
+                        {
+                            distance = tempDist;
+                            unit = temp;
+                        }
+                    }
+                }
+
+
                 break;
         }
-
-        float distance = 9999;
-        foreach (GameObject temp in units)
-        {
-            float tempDist = Vector3.Distance(transform.position, temp.transform.position);
-            if (tempDist <= distance)
-            {
-                distance = tempDist;
-                unit = temp;
-            }
-        }
-
         return unit;
     }
 }
