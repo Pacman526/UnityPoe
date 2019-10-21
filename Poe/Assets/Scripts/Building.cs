@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Building : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public abstract class Building : MonoBehaviour
     [SerializeField] protected int maxHP;
     [SerializeField] protected int team;
     [SerializeField] protected Material[] mat;
+
+    protected Image healthBar;
 
     public string typeOfUnit;
     public int Hp { get => HP; set => HP = value; }
@@ -24,6 +27,6 @@ public abstract class Building : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        healthBar.fillAmount = (float)Hp / maxHP;
     }
 }

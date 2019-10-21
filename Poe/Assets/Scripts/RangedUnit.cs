@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RangedUnit : Unit
 {
@@ -8,7 +9,7 @@ public class RangedUnit : Unit
     void Start()
     {
         typeOfUnit = "RangedUnit";
-        Hp = 8;
+        Hp = 12;
         maxHP = hp;
         attack = 1;
         range = 2;
@@ -25,6 +26,8 @@ public class RangedUnit : Unit
                 gameObject.tag = "Team2";
                 break;
         }
+
+        healthBar = GetComponentsInChildren<Image>()[1];
     }
 
  

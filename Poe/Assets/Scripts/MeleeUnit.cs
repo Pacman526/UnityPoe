@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MeleeUnit : Unit
 {
@@ -24,6 +25,8 @@ public class MeleeUnit : Unit
                 gameObject.tag = "Team2";
                 break;
         }
+
+        healthBar = GetComponentsInChildren<Image>()[1];
     }
 
     

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Unit : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected Material[] mat;
     float timer = 0;
     public string typeOfUnit;
+
+    protected Image healthBar;
 
     public int Hp { get => hp; set => hp = value; }
     public int MaxHP { get => maxHP; }
@@ -31,6 +34,11 @@ public abstract class Unit : MonoBehaviour
     void Update()
     {
         GameObject Enemy = GetClosestUnit();
+        healthBar.fillAmount = (float)hp / maxHP;
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
         
         if (Enemy.GetComponent<Building>())
         {
@@ -69,8 +77,8 @@ public abstract class Unit : MonoBehaviour
             {
                 Enemy.GetComponent<Unit>().hp -= attack;
                 timer = 0;
+                healthBar.fillAmount = (float)hp / maxHP;
             }
-            
         }
     }
 

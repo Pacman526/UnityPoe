@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ResourceBuiding : Building
 {
@@ -28,12 +29,13 @@ public class ResourceBuiding : Building
                 gameObject.tag = "Team2";
                 break;
         }
-        
+        healthBar = GetComponentsInChildren<Image>()[1];
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        healthBar.fillAmount = (float)Hp / maxHP;
     }
 }
