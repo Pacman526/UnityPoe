@@ -58,7 +58,7 @@ public abstract class Unit : MonoBehaviour
             else
             {
                 timer += Time.deltaTime;
-                if (timer > 0.4f)
+                if (timer > 0.7f)
                 {
                     units = GameObject.FindGameObjectsWithTag("Team1");
                     foreach (GameObject temp in units)
@@ -113,7 +113,7 @@ public abstract class Unit : MonoBehaviour
             else
             {
                 timer += Time.deltaTime;
-                if (timer > 0.5f)
+                if (timer > 0.75f)
                 {
                     Enemy.GetComponent<Building>().Hp -= attack;
                     timer = 0;
@@ -133,7 +133,7 @@ public abstract class Unit : MonoBehaviour
         else
         {
             timer += Time.deltaTime;
-            if (timer >0.5f)
+            if (timer > 0.75f)
             {
                 Enemy.GetComponent<Unit>().hp -= attack;
                 timer = 0;
